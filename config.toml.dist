@@ -1,0 +1,5 @@
+[database]
+dialect = "mysql"
+datasource = "root:root@tcp(127.0.0.1:3306)/database?parseTime=true"
+dir = "migrations"
+table = "migrations"
