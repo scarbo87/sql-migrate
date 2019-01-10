@@ -50,8 +50,6 @@ func init() {
 
 func applyMigrations(dir migrate.MigrationDirection, dryRun bool, limit int) error {
 
-	fmt.Println(dryRun, limit)
-
 	db, dialect, err := getConnection()
 	if err != nil {
 		return err
