@@ -49,17 +49,26 @@ func initConfig() {
 }
 
 func getConnection() (*sql.DB, string, error) {
+
+	// Make sure we only accept dialects that were compiled in.
 	dialect := viper.GetString("database.dialect")
+	_, exists := dialects[dialect]
+	if !exists {
+		return nil, "", fmt.Errorf("Unsupported dialect: %s", dialect)
+	}
+
+	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s?parseTime=true",
+		viper.GetString("database.username"),
+		viper.GetString("database.password"),
+		viper.GetString("database.protocol"),
+		viper.GetString("database.address"),
+		viper.GetString("database.dbname"),
+	)
+	viper.Set("database.datasource", dsn)
 
 	db, err := sql.Open(dialect, viper.GetString("database.datasource"))
 	if err != nil {
 		return nil, "", fmt.Errorf("Cannot connect to database: %s", err)
-	}
-
-	// Make sure we only accept dialects that were compiled in.
-	_, exists := dialects[dialect]
-	if !exists {
-		return nil, "", fmt.Errorf("Unsupported dialect: %s", dialect)
 	}
 
 	return db, dialect, nil

@@ -26,10 +26,6 @@ var rootCmd = &cobra.Command{
 			return errors.New("No dialect specified")
 		}
 
-		if viper.GetString("database.datasource") == "" {
-			return errors.New("No data source specified")
-		}
-
 		return nil
 	},
 }
