@@ -43,9 +43,19 @@ Each command requires a configuration file (which defaults to `config.toml`, but
 ```toml
 [database]
 dialect = "mysql"
-datasource = "root:root@tcp(127.0.0.1:3306)/database?parseTime=true"
-dir = "migrations/mysql"
+username = "username"
+password = "password"
+protocol = "tcp"
+address = "127.0.0.1:3306"
+dbname = "database"
+dir = "migrations"
 table = "migrations"
+```
+
+Run with env override:
+
+```bash
+DATABASE_USERNAME=root DATABASE_PASSWORD=root DATABASE_DBNAME=dbname sql-migrate-cobra`
 ```
 
 The `table` setting is optional and will default to `migrations`.
